@@ -1,0 +1,45 @@
+.header-activity {
+    display: flex;
+    height: 49px;
+    min-width: 1260px;
+    background: #25282A;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+}
+
+.content-activity {
+    background: #E4E4E2;
+    display: flex;
+    height: 850px;
+}
+
+.sider-activity {
+    background: #25282A;
+}
+
+.footer-activity {
+    background: #25282A;
+    min-height: 20px;
+    color: #E4E4E2;
+}
+.form{
+    display: flex; 
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.button{
+    right: 10px;
+}
+.list{
+    width: 100%;
+    padding: 10px;
+    display: flex; 
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.input{
+    width: 150px;
+}
+.list-item{
+    width: 1000px;
+}
