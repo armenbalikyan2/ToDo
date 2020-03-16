@@ -6,14 +6,18 @@ import {
 import {
     take,
     put,
-    call,
     takeLatest
 } from 'redux-saga/effects';
 
-function* RemoveDataSaga() {
-
+function* RemoveDataSaga(title) {
+    try {
+        localStorage.removeItem(title)
+        yield put(removeDataSuccess(title))
+    } catch (error) {
+        yield take(removeDataFailure)
+    }
 }
 
 export function* watchRemoveDataSaga() {
-    yield takeLatest(REMOVE_DATA_LOADING,RemoveDataSaga)
+    yield takeLatest(REMOVE_DATA_LOADING, RemoveDataSaga)
 }

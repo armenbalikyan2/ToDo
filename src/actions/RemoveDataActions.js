@@ -7,9 +7,9 @@ export const removeDataLoading = {
     type: REMOVE_DATA_LOADING,
 };
 
-export const removeDataSuccess = (data) => ({
+export const removeDataSuccess = (id) => ({
     type: REMOVE_DATA_SUCCESS,
-    payload: data,
+    payload: id,
 });
 
 export const removeDataFailure = {

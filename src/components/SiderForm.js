@@ -1,56 +1,91 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Input,
     Button,
     Form,
 } from 'antd'
+import { connect } from 'react-redux';
+import { setDataLoading } from '../actions/SetDataActions';
 
+export const Data = [];
 export const SiderForm = (props) => {
     const [form] = Form.useForm();
-    const [formLayout, setFormLayout] = useState('horizontal');
+    const [input, setInput] = useState({
+        title: '',
+        description: '',
+    })
+    const [storage, setStorage] = useState({
+        title: '',
+        description: '',
+    })
 
-    const onFormLayoutChange = ({ layout }) => {
-        setFormLayout(layout);
-    };
+    useEffect(() => {
+        setDataLoading();
+        setInput(
+            ...input,
+            storage
+        )
+    }, [props])
 
-    const formItemLayout =
-        formLayout === 'horizontal'
-        ? {
-          labelCol: { span: 4 },
-          wrapperCol: { span: 14 },
-        }
-      : null;
+    const handleInputChange = (event) => {
+        event.preventDefault();
+        const {
+            target: { name, value }
+        } = event;
+        setInput({
+            ...input,
+            [name]: value
+        });
+    }
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setStorage({
+            title: input.title,
+            description: input.description,
+        });
+        Data.push(storage);
+        setInput({
+            title: "",
+            description: "",
+        });
+    }
+    console.log(Data);
 
-  const buttonItemLayout =
-        formLayout === 'horizontal'
-      ? {
-          wrapperCol: { span: 14, offset: 4 },
-        }
-      : null;
-      
     return (
         <Form
-        {...formItemLayout}
-        layout={formLayout}
-        form={form}
-        initialValues={{ layout: formLayout }}
-        onValuesChange={onFormLayoutChange}
+            form={form}
+            onSubmit={handleSubmit}
         >
-            <div  className='form'>  
+            <div className='form'>
 
                 <Form.Item >
-                    <Input className = 'input' placeholder="input title" />
+                    <Input onChange={handleInputChange} value={input.title} name='title' className='input' placeholder="input title" />
                 </Form.Item>
-                
+
                 <Form.Item >
-                    <Input className = 'input' placeholder="input description" />
+                    <Input onChange={handleInputChange} value={input.description} name='description' className='input' placeholder="input description" />
                 </Form.Item>
 
-                <Form.Item {...buttonItemLayout}>
-                    <Button  className = 'button'  type="primary">Submit</Button>
+                <Form.Item >
+                    <Button onClick={handleSubmit} className='button' type="primary">Submit</Button>
                 </Form.Item>
 
-            </div> 
+            </div>
         </Form>
     )
 }
+const mapStateToProps = (state) => ({
+    data: state.getData.data,
+})
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createNewData: () => {
+            dispatch(setDataLoading(Data))
+        }
+    }
+}
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SiderForm);

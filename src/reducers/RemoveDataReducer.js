@@ -1,29 +1,29 @@
-import { 
+import {
     REMOVE_DATA_LOADING,
     REMOVE_DATA_SUCCESS,
-    REMOVE_DATA_FAILURE 
+    REMOVE_DATA_FAILURE
 } from '../actions/RemoveDataActions';
 
 const initialState = {
     removingData: false,
-    data: []
+    id: []
 }
 
-export default function usersReducer (state = initialState,action){
-    switch (action.type){
+export default function RemoveDataReducer(state = initialState, action) {
+    switch (action.type) {
         case REMOVE_DATA_LOADING:
             return {
                 ...state,
                 removingData: true
             }
         case REMOVE_DATA_SUCCESS:
-            return{
+            return {
                 ...state,
                 removingData: false,
-                data:  action.payload
+                id: action.payload
             }
         case REMOVE_DATA_FAILURE:
-            return{
+            return {
                 ...state,
                 removingData: false,
             }
