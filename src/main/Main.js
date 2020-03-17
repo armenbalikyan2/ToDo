@@ -5,11 +5,13 @@ import { ListForm,SiderForm } from '../components';
 import { Data } from '../components/SiderForm';
 import { watchRemoveDataSaga } from '../sagas';
 import { connect } from 'react-redux';
+import { removeDataLoading } from '../actions/RemoveDataActions';
+import { setDataLoading } from '../actions/SetDataActions';
 
 
-export const Main = ({removeData}) => {
+export const Main = ({removeData,data}) => {
   const { Header, Footer, Sider, Content } = Layout;
-  const [formData,setForm] = useState({})
+  const [formData,setForm] = useState([])
 
 
   const handleRemove = (key) => {
@@ -28,7 +30,7 @@ export const Main = ({removeData}) => {
           <SiderForm />
         </Sider>
         <Content className='content-activity'>
-          <ListForm dataSource={formData} edit={handleEdit} remove={handleRemove}/>
+          <ListForm dataSource={data} edit={handleEdit} remove={handleRemove}/>
         </Content>
       </Layout>
       <Footer className='footer-activity'>Created by Armen Balikyan</Footer>
@@ -41,9 +43,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    removeData: (key) => {
-      dispatch(watchRemoveDataSaga(key))
-    },
+    removeData: () => dispatch(removeDataLoading),
+    setData: () => dispatch(setDataLoading)
   }
 }
 

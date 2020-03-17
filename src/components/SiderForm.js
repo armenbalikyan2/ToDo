@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { setDataLoading } from '../actions/SetDataActions';
 
 export const Data = [];
-export const SiderForm = (props) => {
+export const SiderForm = ({setData}) => {
     const [form] = Form.useForm();
     const [input, setInput] = useState({
         title: '',
@@ -20,12 +20,8 @@ export const SiderForm = (props) => {
     })
 
     useEffect(() => {
-        setDataLoading();
-        setInput(
-            ...input,
-            storage
-        )
-    }, [props])
+        setData();
+    }, [])
 
     const handleInputChange = (event) => {
         event.preventDefault();
@@ -75,14 +71,12 @@ export const SiderForm = (props) => {
     )
 }
 const mapStateToProps = (state) => ({
-    data: state.getData.data,
+    data: state.setData.data,
 })
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createNewData: () => {
-            dispatch(setDataLoading(Data))
-        }
+        setData: () => dispatch(setDataLoading(Data))
     }
 }
 export default connect(

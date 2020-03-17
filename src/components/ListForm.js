@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 import { getDataLoading } from '../actions/GetDataActions';
 
 
-export const ListForm = (props) => {
+export const ListForm = ({data}, {getDataLoading}) => {
     useEffect(() => {
         getDataLoading();
     }, [])
@@ -21,12 +21,12 @@ export const ListForm = (props) => {
         <List
             className="list"
             itemLayout="horizontal"
-            dataSource={props.dataSource}
+            dataSource={data}
             renderItem={item => (
                 <List.Item
                     actions={[
-                        <Button onClick={props.edit(item)} type="primary" size='middle' icon={<EditFilled />} ></Button>,
-                        <Button onClick={props.remove(item.title)} type="primary" size='middle' icon={<DeleteOutlined />} danger ></Button>
+                        <Button onClick={this.edit(item)} type="primary" size='middle' icon={<EditFilled />} ></Button>,
+                        <Button onClick={this.remove(item.key)} type="primary" size='middle' icon={<DeleteOutlined />} danger ></Button>
                     ]}
                 >
                     <List.Item.Meta
@@ -41,7 +41,7 @@ export const ListForm = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    data: state.data,
+    data: state.getData.data,
     loading: state.gettingData
 })
 
